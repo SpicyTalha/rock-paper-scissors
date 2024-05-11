@@ -4,41 +4,63 @@ let getComputerChoice = (() => {
     return (number == 1)?"rock":(number == 2)?"paper":"scissors"});
 
 // A function to get the human choice
-let getHumanChoice = () => prompt("Enter your choice").toLowerCase();
-
+//let getHumanChoice = () => prompt("Enter your choice").toLowerCase();
+let result = ''
 let playround = (getHumanChoiceFunction, getComputerChoiceFunction) => {
-    let humanChoice = getHumanChoiceFunction(); // Call the human choice function
+    let humanChoice = getHumanChoiceFunction; // Call the human choice function
     let computerChoice = getComputerChoiceFunction(); // Call the computer choice function
 
     if (humanChoice === computerChoice) {
-        return "Huh! It's a tie.";
+        result =  "Huh! It's a tie.";
     } else if ((humanChoice === "rock" && computerChoice === "scissors") ||
                (humanChoice === "paper" && computerChoice === "rock") ||
                (humanChoice === "scissors" && computerChoice === "paper")) {
         humanscore++;
-        return `Yay! You won! ${humanChoice} beats ${computerChoice}`;
+        result = `Yay! You won! ${humanChoice} beats ${computerChoice}`;
     } else if ((humanChoice === "rock" && computerChoice === "paper") ||
                (humanChoice === "paper" && computerChoice === "scissors") ||
                (humanChoice === "scissors" && computerChoice === "rock")) {
         computerscore++;
-        return `No! You lost. ${computerChoice} beats ${humanChoice}`;
+        result = `No! You lost. ${computerChoice} beats ${humanChoice}`;
     } else {
-        return "You have entered an invalid choice.";
+        result = "You have entered an invalid choice.";
     }
+    aDiv.textContent = result
 };
 
-let playgame = () => {
-    let results = [];
-    for (var index = 1; index <= 5; index++){
-        const result = console.log(playround(getHumanChoice, getComputerChoice));
-        results.push(result);  
-    }
-    return results;
-}
+// let playgame = () => {
+//     let results = [];
+//     for (var index = 1; index <= 5; index++){
+//         const result = console.log(playround(getHumanChoice, getComputerChoice));
+//         results.push(result);  
+//     }
+//     return results;
+// }
 
 var humanscore = 0;
 var computerscore = 0;
 
-playgame()
+// playgame()
 console.log (`Human score: ${humanscore}\n
 Computer score: ${computerscore}`);
+
+const body = document.querySelector("body")
+const playrock = document.createElement("button")
+playrock.textContent = "ROCK"
+const playpaper = document.createElement("button")
+playpaper.textContent = "PAPER"
+const playscissors = document.createElement("button")
+playscissors.textContent = "SCISSORS"
+
+playrock.addEventListener('click', () => playround("rock", getComputerChoice))
+playpaper.addEventListener('click', () => playround("paper", getComputerChoice))
+playscissors.addEventListener('click', () => playround("scissors", getComputerChoice))
+
+const qDiv = document.createElement("div")
+const aDiv = document.createElement("div")
+
+
+body.appendChild(qDiv)
+qDiv.append(playrock, playpaper, playscissors)
+body.appendChild(aDiv)
+
